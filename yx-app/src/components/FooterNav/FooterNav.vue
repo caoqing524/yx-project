@@ -1,23 +1,23 @@
 <template>
   <footer id="footerContainer">
     <ul class="footerNav">
-      <li class="item">
+      <li class="item" @click="$router.push('/')">
         <i name="tabBar-index" class="u-icon u-icon-tabBar-index u-icon-tabBar-index-active"></i>
         <span class="text">首页</span>
       </li>
-      <li class="item">
+      <li class="item" @click="$router.push('/category')">
         <i name="tabBar-cate" class="u-icon u-icon-tabBar-cate"></i>
         <span class="text">分类</span>
       </li>
-      <li class="item">
+      <li class="item" @click="$router.push('/knowthings')">
         <i name="tabBar-topic" class="u-icon u-icon-tabBar-topic"></i>
         <span class="text">识物</span>
       </li>
-      <li class="item">
+      <li class="item" @click="$router.push('/shopcart')">
         <i name="tabBar-cart" class="u-icon u-icon-tabBar-cart"></i>
         <span class="text">购物车</span>
       </li>
-      <li class="item">
+      <li class="item" @click="$router.push('/personal')">
         <i name="tabBar-ucenter" class="u-icon u-icon-tabBar-ucenter"></i>
         <span class="text">个人</span>
       </li>

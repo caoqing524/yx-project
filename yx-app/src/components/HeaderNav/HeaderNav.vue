@@ -4,13 +4,13 @@
       <img
         src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/indexLogo-a90bdaae6b.png"
       />
-      <div class="search-box">
+      <div class="search-box" @click="$router.push('/search')">
         <img
           src="//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-553dba3aff.png"
         />
         <span class="placeholder">搜索商品，共28888件好物</span>
       </div>
-      <div class="login">登录</div>
+      <div class="login" @click="$router.push('/personal')">登录</div>
     </div>
     <div class="header-nav">
       <div class="list-nav">
@@ -48,7 +48,7 @@
       <!-- 小箭头 -->
       <div class="right-arrow">
         <img
-          
+          :class="{active:isOpen}"
           @click="isOpen=!isOpen"
           :src="'http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/arrow-down-3-799ded53ea.png'"
         />
@@ -59,7 +59,10 @@
           <Li>
             <a href="javascript:;">推荐</a>
           </Li>
-          <Li>
+           <li v-for="(item,index) in homeObj.categoryList" :key="index">
+            <a href="javascript:;">{{item.categoryName}}</a>
+          </li>
+          <!-- <Li> 
             <a href="javascript:;">家居生活</a>
           </Li>
           <Li>
@@ -82,7 +85,7 @@
           </li>
           <li>
             <a href="javascript:;">礼品特色</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -90,11 +93,38 @@
 </template>
 
 <script>
+// 引入滑动库
+import BScroll from "better-scroll";
+import {mapState} from 'vuex'
+// 引入api中发请求的接口
+import {reqMockHome} from '../../api/index.js'
 export default {
   data() {
     return {
-      isOpen: false // 遮罩层默认不打开
+      isOpen: false, // 遮罩层默认不打开
+      homeObj:{}
     };
+  },
+ computed: {
+   ...mapState({
+     homeData:state=>state.home.homeData
+   })
+ },
+
+  // 滑动库
+  async mounted() {
+    // 触发actions中的getHomeData函数调用
+      await this.$store.dispatch('getHomeData')
+       // 更新homeObj
+       this.homeObj=this.homeData.categoryHotSellModule
+      
+      this.$nextTick(() => {
+      this.scroll = new BScroll(".list-nav", {
+        click: true,
+        scrollX: true,
+        probeType: 3
+      });
+    });
   }
 };
 </script>
@@ -106,6 +136,8 @@ export default {
   position fixed
   left 0
   top 0
+  z-index 3
+  background-color #fff
   .header-search
     padding 16px 30px
     box-sizing border-box
@@ -185,7 +217,7 @@ export default {
       display flex
       justify-content center
       align-items center
-      z-index 99
+      z-index 6
       >img
         display flex
         justify-content center
@@ -193,6 +225,8 @@ export default {
         width 28px
         height 28px
         transition transform 300ms linear
+        &.active
+          transform rotateZ(180deg)
     .all-nav
       position absolute
       left 0
@@ -207,6 +241,7 @@ export default {
         display flex
         align-items center
       .all-nav-list
+        z-index 99
         display flex
         padding-left 15px
         /* 自动换行 */
