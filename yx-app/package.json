@@ -16,7 +16,7 @@
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.24.0",
     "px2rem-loader": "^0.1.9",
-    "swiper": "^4.5.1",
+    "swiper": "^6.5.1",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-router": "^3.1.3",
